@@ -1,12 +1,25 @@
+export type ProductBrand =
+  | "Abhiram's Chappathi"
+  | "Abhiram's Poori"
+  | "Abhiram's Dosa Batter";
+
+export type ProductCategory = "Chappathi" | "Poori" | "Dosa Batter";
+
 export interface Product {
   id: string;
+  brand_name: ProductBrand;
   name: string;
   description: string;
-  category: string;
-  price: number;
+  category: ProductCategory;
+  price: number | null;
   unit: string;
+  prep_time: string;
+  shelf_life: string;
+  storage: string;
+  highlights: string[];
   image_url: string | null;
   is_available: boolean;
+  sort_order: number;
   created_at: string;
 }
 
@@ -15,13 +28,8 @@ export interface ContactMessage {
   name: string;
   phone: string;
   email?: string;
+  enquiry_type?: string;
+  product_interest?: string;
   message: string;
   created_at?: string;
 }
-
-export type ProductCategory =
-  | "Millets"
-  | "Cold-pressed oils"
-  | "Healthy snacks"
-  | "Natural sweeteners"
-  | "Health mixes";

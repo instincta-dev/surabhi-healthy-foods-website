@@ -1,40 +1,56 @@
 import Link from "next/link";
-import { Leaf } from "lucide-react";
-import { NAV_LINKS, SITE_NAME, CONTACT } from "@/lib/constants";
+import Image from "next/image";
+import { Phone, Mail, Clock, MapPin } from "lucide-react";
+import {
+  NAV_LINKS,
+  COMPANY_NAME,
+  BRAND_NAME,
+  CONTACT,
+  BRAND_LINES,
+} from "@/lib/constants";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-sand-dark/30">
-      <div className="mx-auto max-w-7xl px-6 py-12">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {/* Brand */}
-          <div className="sm:col-span-2 lg:col-span-1">
+    <footer className="bg-brand-deep text-cream">
+      <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-12">
+          {/* Brand & Parent Identity */}
+          <div className="lg:col-span-4">
             <Link
               href="/"
-              className="mb-4 flex items-center gap-2 text-brand no-underline"
+              className="inline-flex items-center rounded-2xl bg-white px-4 py-2.5 shadow-sm"
             >
-              <Leaf className="h-7 w-7 text-accent" strokeWidth={1.8} />
-              <span className="font-heading text-lg font-extrabold">
-                {SITE_NAME}
-              </span>
+              <Image
+                src="/images/abhirams-logo.png"
+                alt={`${BRAND_NAME} logo`}
+                width={132}
+                height={62}
+                className="h-10 w-auto object-contain"
+              />
             </Link>
-            <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted">
-              Wholesome, natural food made with simple ingredients and no
-              shortcuts — for families who care about what they eat.
+            <p className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-accent">
+              {COMPANY_NAME}
+            </p>
+            <p className="mt-2.5 max-w-sm text-sm leading-relaxed text-cream/75">
+              Crafting wholesome, preservative-free everyday Indian food
+              essentials under the{" "}
+              <span className="font-medium text-white">{BRAND_NAME}</span>{" "}
+              brand — fresh from our hygienic kitchen to households and retail
+              shelves.
             </p>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="mb-4 font-heading text-sm font-bold uppercase tracking-wider text-brand">
-              Quick Links
+          {/* Navigation */}
+          <div className="lg:col-span-2">
+            <h4 className="mb-4 font-heading text-xs font-bold uppercase tracking-[0.14em] text-accent">
+              Navigation
             </h4>
             <ul className="space-y-2.5">
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted transition-colors hover:text-brand"
+                    className="text-sm text-cream/75 transition-colors hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -43,32 +59,61 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact */}
-          <div>
-            <h4 className="mb-4 font-heading text-sm font-bold uppercase tracking-wider text-brand">
-              Contact
+          {/* Signature Brands */}
+          <div className="lg:col-span-3">
+            <h4 className="mb-4 font-heading text-xs font-bold uppercase tracking-[0.14em] text-accent">
+              Our Signature Brands
             </h4>
-            <ul className="space-y-2.5 text-sm text-muted">
-              <li>Phone: {CONTACT.phone}</li>
-              <li>Email: {CONTACT.email}</li>
-              <li>{CONTACT.hours}</li>
+            <ul className="space-y-2.5">
+              {BRAND_LINES.map((brand) => (
+                <li key={brand.id}>
+                  <Link
+                    href={`/products?category=${encodeURIComponent(brand.category)}`}
+                    className="group block text-sm text-cream/85 transition-colors hover:text-white"
+                  >
+                    <span className="font-medium">{brand.brandName}</span>
+                    <span className="block text-xs text-cream/55 group-hover:text-cream/75">
+                      {brand.tagline}
+                    </span>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Address */}
-          <div>
-            <h4 className="mb-4 font-heading text-sm font-bold uppercase tracking-wider text-brand">
-              Visit Us
+          {/* Contact */}
+          <div className="lg:col-span-3">
+            <h4 className="mb-4 font-heading text-xs font-bold uppercase tracking-[0.14em] text-accent">
+              Reach Us
             </h4>
-            <p className="text-sm leading-relaxed text-muted">
-              {CONTACT.address}
-            </p>
+            <ul className="space-y-3 text-sm text-cream/75">
+              <li className="flex items-start gap-2.5">
+                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                <span>{CONTACT.phone}</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                <span className="break-all">{CONTACT.email}</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Clock className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                <span>{CONTACT.hours}</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                <span>{CONTACT.address}</span>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-sand-dark/30 pt-8 text-sm text-muted">
-          <span>© 2026 {SITE_NAME}. All rights reserved.</span>
-          <span>Eat well · Live well</span>
+        <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-cream/60">
+          <span>
+            © 2026 {COMPANY_NAME}. All rights reserved.
+          </span>
+          <span>
+            {BRAND_NAME} Chappathi · {BRAND_NAME} Poori · {BRAND_NAME} Dosa Batter
+          </span>
         </div>
       </div>
     </footer>

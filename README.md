@@ -1,26 +1,25 @@
-# Surabhi Healthy Foods
+# Surabhi Healthy Foods — Abhiram's Product Showcase
 
-A clean, minimal, professional website for **Surabhi Healthy Foods** — built with Next.js 15 (App Router), Tailwind CSS v4, TypeScript, Supabase, and Bun.
+Official website for **Surabhi Healthy Foods**, manufacturers of the **Abhiram's** range of everyday Indian kitchen staples:
+
+- **Abhiram's Chappathi** — Half Cooked Whole Wheat Chappathi
+- **Abhiram's Poori** — Fresh Ready-to-Fry Wheat Poori
+- **Abhiram's Dosa Batter** — Stone-Ground Fresh Dosa & Idli Batter
 
 ## Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
-| Framework | [Next.js 15](https://nextjs.org) (App Router) |
+| Framework | Next.js 16 (App Router, Cache Components) |
 | Language | TypeScript |
 | Styling | Tailwind CSS v4 |
-| Backend / DB | [Supabase](https://supabase.com) (PostgreSQL) |
-| Package Manager | [Bun](https://bun.sh) |
-| Hosting | [Vercel](https://vercel.com) |
-| Icons | [Lucide React](https://lucide.dev) |
-| Fonts | Bricolage Grotesque + Inter (Google Fonts) |
+| Backend / DB | Supabase (PostgreSQL + RLS) |
+| Package Manager | Bun |
+| Hosting | Vercel |
+| Icons | Lucide React |
+| Typography | Bricolage Grotesque + Inter (`next/font/google`) |
 
 ## Getting Started
-
-### Prerequisites
-
-- [Bun](https://bun.sh) ≥ 1.0
-- A [Supabase](https://supabase.com) project (free tier works)
 
 ### 1. Install dependencies
 
@@ -30,20 +29,18 @@ bun install
 
 ### 2. Set up Supabase
 
-1. Create a new project at [supabase.com](https://supabase.com)
-2. Go to **SQL Editor** and run the contents of [`supabase/schema.sql`](./supabase/schema.sql)
-3. Copy your project URL and anon key from **Settings → API**
+1. Create a project at [supabase.com](https://supabase.com).
+2. Open the **SQL Editor** and execute [`supabase/schema.sql`](./supabase/schema.sql).
+3. Add your Project URL and Anon Key in `.env.local`:
 
-### 3. Configure environment variables
-
-Copy `.env.local` and fill in your Supabase credentials:
-
-```bash
+```env
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 ```
 
-### 4. Run the dev server
+> Without Supabase configured, the application cleanly falls back to the built-in catalog in `src/lib/constants.ts`.
+
+### 3. Run locally
 
 ```bash
 bun dev
@@ -51,48 +48,36 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-> **Note:** The site works without Supabase configured — it falls back to built-in sample data for products.
-
 ## Project Structure
 
 ```
+public/images/              # Abhiram's logo and product visuals
 src/
 ├── app/
-│   ├── layout.tsx          # Root layout (Header + Footer)
-│   ├── page.tsx            # Home page
-│   ├── about/page.tsx      # About page
-│   ├── products/page.tsx   # Products listing + category filter
-│   ├── contact/page.tsx    # Contact info + form
-│   └── globals.css         # Tailwind + custom theme
+│   ├── layout.tsx          # Root layout, Google Fonts, Header & Footer
+│   ├── page.tsx            # Home page (Hero, 3 Brand Lines, Interactive Prep Guide)
+│   ├── about/page.tsx      # About Surabhi Healthy Foods & 5-step process
+│   ├── products/page.tsx   # Catalog, category tabs & comparison table
+│   ├── contact/page.tsx    # Contact channels & Supabase enquiry form
+│   └── globals.css         # Tailwind v4 @theme inline tokens
 ├── components/
-│   ├── Header.tsx          # Sticky header with mobile nav
-│   ├── Footer.tsx          # Site footer
-│   ├── ProductCard.tsx     # Product display card
-│   ├── CategoryFilter.tsx  # Category filter buttons
-│   └── ContactForm.tsx     # Contact form with validation
+│   ├── Header.tsx          # Responsive sticky navigation with logo lockup
+│   ├── Footer.tsx          # Brand footer & navigation
+│   ├── SignatureShowcase.tsx # Interactive prep guide tabs
+│   ├── ProductsCatalog.tsx # Client category filtering
+│   ├── ProductCard.tsx     # Pack detail card
+│   ├── CategoryFilter.tsx  # Filter pills
+│   └── ContactForm.tsx     # Enquiry form with product pre-selection
 ├── lib/
-│   ├── supabase.ts         # Supabase client
-│   ├── api.ts              # Data fetching functions
-│   └── constants.ts        # Site config & fallback data
-└── types/
-    └── index.ts            # TypeScript types
+│   ├── supabase.ts         # Resilient Supabase client
+│   ├── api.ts              # Catalog & enquiry submission helpers
+│   └── constants.ts        # Brand metadata & fallback product catalog
+└── types/index.ts          # Shared TypeScript interfaces
 ```
 
 ## Deploying to Vercel
 
-1. Push this repo to GitHub
-2. Import the repo in [Vercel](https://vercel.com)
-3. Add environment variables in Vercel project settings:
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-4. Deploy! Vercel auto-detects Next.js and Bun.
-
-## Customization
-
-- **Colors & fonts:** Edit the `@theme` block in [`src/app/globals.css`](./src/app/globals.css)
-- **Contact info:** Update [`src/lib/constants.ts`](./src/lib/constants.ts)
-- **Products:** Add/edit in Supabase dashboard or update the fallback data in `constants.ts`
-
-## License
-
-See [LICENSE](./LICENSE).
+1. Push the repository to GitHub.
+2. Import into [Vercel](https://vercel.com) (configured via `vercel.json` to install and build with `bun`).
+3. Configure `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in Vercel Environment Variables.
+4. Deploy.

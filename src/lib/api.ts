@@ -1,4 +1,4 @@
-import { getSupabaseClient, isSupabaseConfigured } from "./supabase";
+import { getSupabaseClient } from "./supabase";
 import { FALLBACK_PRODUCTS } from "./constants";
 import type { Product, ContactMessage } from "@/types";
 
@@ -10,7 +10,7 @@ export async function getProducts(): Promise<Product[]> {
     .from("products")
     .select("*")
     .eq("is_available", true)
-    .order("category", { ascending: true })
+    .order("sort_order", { ascending: true })
     .order("name", { ascending: true });
 
   if (error) {
@@ -18,7 +18,7 @@ export async function getProducts(): Promise<Product[]> {
     return FALLBACK_PRODUCTS;
   }
 
-  return data ?? FALLBACK_PRODUCTS;
+  return data && data.length > 0 ? data : FALLBACK_PRODUCTS;
 }
 
 export async function getProductsByCategory(
@@ -34,6 +34,7 @@ export async function getProductsByCategory(
     .from("products")
     .select("*")
     .eq("is_available", true)
+    .order("sort_order", { ascending: true })
     .order("name", { ascending: true });
 
   if (category !== "All") {
@@ -49,7 +50,11 @@ export async function getProductsByCategory(
     );
   }
 
-  return data ?? [];
+  return data && data.length > 0
+    ? data
+    : FALLBACK_PRODUCTS.filter(
+        (p) => category === "All" || p.category === category
+      );
 }
 
 export async function submitContactMessage(
@@ -57,12 +62,20 @@ export async function submitContactMessage(
 ): Promise<{ success: boolean; error?: string }> {
   const client = getSupabaseClient();
   if (!client) {
-    // In dev without Supabase, just log and return success
-    console.log("Contact form submission (dev mode):", message);
+    console.log("Contact form submission (fallback dev mode):", message);
     return { success: true };
   }
 
-  const { error } = await client.from("contact_messages").insert([message]);
+  const { error } = await client.from("contact_messages").insert([
+    {
+      name: message.name,
+      phone: message.phone,
+      email: message.email || null,
+      enquiry_type: message.enquiry_type || "Home Order",
+      product_interest: message.product_interest || null,
+      message: message.message,
+    },
+  ]);
 
   if (error) {
     console.error("Error submitting contact message:", error);
