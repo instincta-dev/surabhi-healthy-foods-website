@@ -1,25 +1,35 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-brand: #1E4618;
-  --color-brand-deep: #132E10;
+  /* ── Brand Palette ── */
+  --color-brand: #1B3A14;
+  --color-brand-deep: #0F2409;
   --color-brand-light: #2B5C23;
-  --color-sprout: #84B320;
-  --color-accent: #F29A10;
-  --color-accent-hover: #D98506;
-  --color-gold: #9A5D00;
+  --color-herb: #2D6A1E;
+  --color-sprout: #6DAD3C;
+  --color-accent: #E8922E;
+  --color-accent-hover: #D07E1A;
+  --color-gold: #8C5308;
   --color-earth: #6B3E1D;
-  --color-cream: #FAF9F5;
-  --color-paper: #F2EFE6;
-  --color-paper-dark: #E4DFD2;
-  --color-sage-tint: #EFF4EC;
-  --color-ink: #172216;
-  --color-muted: #4E5B4C;
+  --color-cream: #FDFCF9;
+  --color-warm: #F9F6F0;
+  --color-paper: #F3EFE7;
+  --color-paper-dark: #E2DDD1;
+  --color-sage-tint: #EEF4EA;
+  --color-ink: #1A1E18;
+  --color-muted: #555F52;
 
-  --font-heading: var(--font-bricolage), system-ui, -apple-system, sans-serif;
+  /* ── Typography ── */
+  --font-heading: var(--font-bricolage), "Georgia", serif;
   --font-body: var(--font-inter), system-ui, -apple-system, sans-serif;
+
+  /* ── View Transition Timing ── */
+  --duration-exit: 160ms;
+  --duration-enter-delay: 70ms;
+  --duration-enter: 280ms;
 }
 
+/* ── Base ── */
 @layer base {
   html {
     scroll-behavior: smooth;
@@ -40,5 +50,111 @@
   h5,
   h6 {
     font-family: var(--font-heading);
+  }
+}
+
+/* ── View Transitions — Smooth Blur-Fade Route Navigation ── */
+
+/* Allow interaction immediately without blocking clicks */
+::view-transition {
+  pointer-events: none;
+}
+
+/* Keep the root canvas static so only the page region transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+/* Anchor the sticky header cleanly above page transitions */
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+/* Subtle crossfade for footer if height shifts between pages */
+::view-transition-old(site-footer) {
+  animation: var(--duration-exit) cubic-bezier(0.4, 0, 1, 1) both vt-fade reverse;
+}
+::view-transition-new(site-footer) {
+  animation: var(--duration-enter) cubic-bezier(0.22, 1, 0.36, 1) var(--duration-enter-delay) both vt-fade;
+}
+
+/* Main route blur-fade exit & enter */
+::view-transition-old(.page-blur-fade) {
+  animation:
+    var(--duration-exit) cubic-bezier(0.4, 0, 1, 1) both vt-fade reverse,
+    var(--duration-exit) cubic-bezier(0.4, 0, 1, 1) both vt-blur-out;
+}
+::view-transition-new(.page-blur-fade) {
+  animation:
+    var(--duration-enter) cubic-bezier(0.22, 1, 0.36, 1) var(--duration-enter-delay) both vt-fade,
+    var(--duration-enter) cubic-bezier(0.22, 1, 0.36, 1) var(--duration-enter-delay) both vt-blur-in;
+}
+
+@keyframes vt-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes vt-blur-out {
+  from {
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+  to {
+    filter: blur(8px);
+    transform: translateY(-4px) scale(0.994);
+  }
+}
+
+@keyframes vt-blur-in {
+  from {
+    filter: blur(8px);
+    transform: translateY(6px) scale(0.994);
+  }
+  to {
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+/* Utility reveal animation for filtered product cards */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@layer utilities {
+  .animate-fade-in-up {
+    animation: fade-in-up 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 }

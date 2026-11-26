@@ -12,12 +12,16 @@ export default function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-paper-dark/80 bg-white/95 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 sm:px-8">
-        {/* Brand + Parent Lockup */}
+    <header
+      className="sticky top-0 z-50 border-b border-paper-dark/60 bg-cream/92 backdrop-blur-xl"
+      style={{ viewTransitionName: "site-header" }}
+    >
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-2.5 sm:px-8">
+        {/* Logo + Parent */}
         <Link
           href="/"
-          className="group flex shrink-0 items-center gap-3 focus:outline-none"
+          onClick={() => setMobileOpen(false)}
+          className="group flex shrink-0 items-center gap-3.5 focus:outline-none"
           aria-label={`${BRAND_NAME} by ${COMPANY_NAME} — Home`}
         >
           <Image
@@ -26,20 +30,23 @@ export default function Header() {
             width={140}
             height={66}
             priority
-            className="h-10 w-auto shrink-0 object-contain transition-transform duration-200 group-hover:scale-[1.02] sm:h-12"
+            className="h-9 w-auto shrink-0 object-contain transition-transform duration-200 group-hover:scale-[1.02] sm:h-10"
           />
-          <div className="hidden whitespace-nowrap border-l border-paper-dark pl-3 sm:block">
-            <span className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-gold">
+          <div className="hidden border-l border-paper-dark/60 pl-3.5 sm:block">
+            <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-muted">
               A Brand By
             </span>
-            <span className="block font-heading text-sm font-bold tracking-tight text-brand">
+            <span className="block font-heading text-[13px] font-semibold tracking-tight text-brand">
               {COMPANY_NAME}
             </span>
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-1.5 lg:flex" aria-label="Main navigation">
+        {/* Desktop Nav */}
+        <nav
+          className="hidden items-center gap-1 lg:flex"
+          aria-label="Main navigation"
+        >
           {NAV_LINKS.map((link) => {
             const isActive =
               link.href === "/"
@@ -50,10 +57,10 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`whitespace-nowrap rounded-full px-4 py-2 text-[14.5px] font-medium transition-colors ${
+                className={`whitespace-nowrap rounded-full px-4 py-2 text-[13.5px] font-medium transition-colors duration-150 ${
                   isActive
-                    ? "bg-sage-tint font-semibold text-brand"
-                    : "text-muted hover:bg-paper/70 hover:text-brand"
+                    ? "bg-brand/[0.06] font-semibold text-brand"
+                    : "text-muted hover:text-brand"
                 }`}
               >
                 {link.label}
@@ -62,35 +69,37 @@ export default function Header() {
           })}
           <Link
             href="/contact"
-            className="ml-3 inline-flex shrink-0 whitespace-nowrap items-center gap-1.5 rounded-full bg-brand px-5 py-2.5 text-[14.5px] font-semibold text-white shadow-sm transition-all hover:bg-brand-deep hover:shadow"
+            className="ml-3 inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand px-5 py-2.5 text-[13.5px] font-semibold text-white transition-all duration-150 hover:bg-brand-deep hover:shadow-sm"
           >
-            Order &amp; Enquire
-            <ArrowUpRight className="h-4 w-4 text-accent" />
+            Get in Touch
+            <ArrowUpRight className="h-3.5 w-3.5 text-accent" />
           </Link>
         </nav>
 
-        {/* Mobile / Tablet Menu Button */}
+        {/* Mobile Toggle */}
         <button
           type="button"
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-paper-dark bg-cream text-brand transition-colors hover:bg-paper lg:hidden"
-          aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+          className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-paper-dark/60 text-brand transition-colors hover:bg-paper lg:hidden"
+          aria-label={
+            mobileOpen ? "Close navigation menu" : "Open navigation menu"
+          }
           aria-expanded={mobileOpen}
         >
-          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          {mobileOpen ? (
+            <X className="h-[18px] w-[18px]" />
+          ) : (
+            <Menu className="h-[18px] w-[18px]" />
+          )}
         </button>
       </div>
 
-      {/* Mobile / Tablet Drawer */}
+      {/* Mobile Drawer */}
       {mobileOpen && (
         <nav
-          className="border-t border-paper-dark/80 bg-white px-5 pb-6 pt-3 lg:hidden"
+          className="border-t border-paper-dark/60 bg-cream px-5 pb-6 pt-4 lg:hidden"
           aria-label="Mobile navigation"
         >
-          <div className="mb-3 rounded-xl bg-sage-tint px-3.5 py-2 text-xs font-medium text-brand">
-            <span className="text-muted">Parent Company: </span>
-            <span className="font-semibold">{COMPANY_NAME}</span>
-          </div>
           <div className="flex flex-col gap-1">
             {NAV_LINKS.map((link) => {
               const isActive =
@@ -103,10 +112,10 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className={`rounded-xl px-4 py-3 text-base font-medium transition-colors ${
+                  className={`rounded-xl px-4 py-3 text-[15px] font-medium transition-colors ${
                     isActive
-                      ? "bg-sage-tint font-semibold text-brand"
-                      : "text-ink hover:bg-paper/60"
+                      ? "bg-brand/[0.06] font-semibold text-brand"
+                      : "text-ink hover:bg-paper/70"
                   }`}
                 >
                   {link.label}
@@ -117,9 +126,9 @@ export default function Header() {
           <Link
             href="/contact"
             onClick={() => setMobileOpen(false)}
-            className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-brand px-5 py-3.5 text-base font-semibold text-white"
+            className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-brand px-5 py-3 text-[15px] font-semibold text-white"
           >
-            Order &amp; Enquire
+            Get in Touch
             <ArrowUpRight className="h-4 w-4 text-accent" />
           </Link>
         </nav>

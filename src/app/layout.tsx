@@ -15,7 +15,7 @@ const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-bricolage",
   display: "swap",
-  weight: ["500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -48,7 +48,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${bricolage.variable}`}>
-      <body className="flex min-h-screen flex-col bg-cream font-body text-ink antialiased selection:bg-accent/30 selection:text-brand-deep">
+      <body className="flex min-h-screen flex-col bg-cream font-body text-ink antialiased selection:bg-sprout/20 selection:text-brand-deep">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

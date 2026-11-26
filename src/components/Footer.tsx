@@ -11,39 +11,41 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="bg-brand-deep text-cream">
-      <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
+    <footer
+      className="bg-brand-deep text-cream/90"
+      style={{ viewTransitionName: "site-footer" }}
+    >
+      <div className="mx-auto max-w-7xl px-5 py-12 sm:px-8">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-12">
-          {/* Brand & Parent Identity */}
+          {/* Brand */}
           <div className="lg:col-span-4">
             <Link
               href="/"
-              className="inline-flex items-center rounded-2xl bg-white px-4 py-2.5 shadow-sm"
+              className="inline-flex items-center rounded-2xl bg-white px-4 py-2.5"
             >
               <Image
                 src="/images/abhirams-logo.png"
                 alt={`${BRAND_NAME} logo`}
-                width={132}
-                height={62}
-                className="h-10 w-auto object-contain"
+                width={120}
+                height={56}
+                className="h-9 w-auto object-contain"
               />
             </Link>
-            <p className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-accent">
+            <p className="mt-4 text-[11px] font-medium uppercase tracking-[0.16em] text-accent">
               {COMPANY_NAME}
             </p>
             <p className="mt-2.5 max-w-sm text-sm leading-relaxed text-cream/75">
               Crafting wholesome, preservative-free everyday Indian food
               essentials under the{" "}
               <span className="font-medium text-white">{BRAND_NAME}</span>{" "}
-              brand — fresh from our hygienic kitchen to households and retail
-              shelves.
+              brand.
             </p>
           </div>
 
-          {/* Navigation */}
+          {/* Nav */}
           <div className="lg:col-span-2">
-            <h4 className="mb-4 font-heading text-xs font-bold uppercase tracking-[0.14em] text-accent">
-              Navigation
+            <h4 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">
+              Pages
             </h4>
             <ul className="space-y-2.5">
               {NAV_LINKS.map((link) => (
@@ -59,12 +61,12 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Signature Brands */}
+          {/* Brands */}
           <div className="lg:col-span-3">
-            <h4 className="mb-4 font-heading text-xs font-bold uppercase tracking-[0.14em] text-accent">
-              Our Signature Brands
+            <h4 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">
+              Products
             </h4>
-            <ul className="space-y-2.5">
+            <ul className="space-y-3">
               {BRAND_LINES.map((brand) => (
                 <li key={brand.id}>
                   <Link
@@ -72,7 +74,7 @@ export default function Footer() {
                     className="group block text-sm text-cream/85 transition-colors hover:text-white"
                   >
                     <span className="font-medium">{brand.brandName}</span>
-                    <span className="block text-xs text-cream/55 group-hover:text-cream/75">
+                    <span className="block text-xs text-cream/65 group-hover:text-cream/85">
                       {brand.tagline}
                     </span>
                   </Link>
@@ -83,8 +85,8 @@ export default function Footer() {
 
           {/* Contact */}
           <div className="lg:col-span-3">
-            <h4 className="mb-4 font-heading text-xs font-bold uppercase tracking-[0.14em] text-accent">
-              Reach Us
+            <h4 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">
+              Contact
             </h4>
             <ul className="space-y-3 text-sm text-cream/75">
               <li className="flex items-start gap-2.5">
@@ -107,12 +109,11 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-cream/60">
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6 text-xs text-cream/65">
+          <span>© 2026 {COMPANY_NAME}. All rights reserved.</span>
           <span>
-            © 2026 {COMPANY_NAME}. All rights reserved.
-          </span>
-          <span>
-            {BRAND_NAME} Chappathi · {BRAND_NAME} Poori · {BRAND_NAME} Dosa Batter
+            {BRAND_NAME} Chappathi · {BRAND_NAME} Poori · {BRAND_NAME} Dosa
+            Batter
           </span>
         </div>
       </div>

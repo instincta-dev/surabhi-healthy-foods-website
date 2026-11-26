@@ -1,6 +1,17 @@
 import { getSupabaseClient } from "./supabase";
-import { FALLBACK_PRODUCTS } from "./constants";
+import {
+  FALLBACK_PRODUCTS,
+  buildCoreCatalogProducts,
+  normalizeProductCategory,
+} from "./constants";
 import type { Product, ContactMessage } from "@/types";
+
+const ALLOWED_DB_CATEGORIES = [
+  "Chappathi",
+  "Chapati",
+  "Poori",
+  "Dosa Batter",
+];
 
 export async function getProducts(): Promise<Product[]> {
   const client = getSupabaseClient();
@@ -10,6 +21,7 @@ export async function getProducts(): Promise<Product[]> {
     .from("products")
     .select("*")
     .eq("is_available", true)
+    .in("category", ALLOWED_DB_CATEGORIES)
     .order("sort_order", { ascending: true })
     .order("name", { ascending: true });
 
@@ -18,43 +30,24 @@ export async function getProducts(): Promise<Product[]> {
     return FALLBACK_PRODUCTS;
   }
 
-  return data && data.length > 0 ? data : FALLBACK_PRODUCTS;
+  return data && data.length > 0
+    ? buildCoreCatalogProducts(data as Product[])
+    : FALLBACK_PRODUCTS;
 }
 
 export async function getProductsByCategory(
   category: string
 ): Promise<Product[]> {
-  const client = getSupabaseClient();
-  if (!client) {
-    if (category === "All") return FALLBACK_PRODUCTS;
-    return FALLBACK_PRODUCTS.filter((p) => p.category === category);
+  const normalized =
+    category === "All" ? "All" : normalizeProductCategory(category);
+
+  if (category !== "All" && !normalized) {
+    return [];
   }
 
-  let query = client
-    .from("products")
-    .select("*")
-    .eq("is_available", true)
-    .order("sort_order", { ascending: true })
-    .order("name", { ascending: true });
-
-  if (category !== "All") {
-    query = query.eq("category", category);
-  }
-
-  const { data, error } = await query;
-
-  if (error) {
-    console.error("Error fetching products:", error);
-    return FALLBACK_PRODUCTS.filter(
-      (p) => category === "All" || p.category === category
-    );
-  }
-
-  return data && data.length > 0
-    ? data
-    : FALLBACK_PRODUCTS.filter(
-        (p) => category === "All" || p.category === category
-      );
+  const allCore = await getProducts();
+  if (normalized === "All") return allCore;
+  return allCore.filter((p) => p.category === normalized);
 }
 
 export async function submitContactMessage(

@@ -5,6 +5,18 @@ export type ProductBrand =
 
 export type ProductCategory = "Chappathi" | "Poori" | "Dosa Batter";
 
+export type PackSizeKey = "250g" | "500g" | "1kg" | "2kg";
+
+export interface ProductVariant {
+  sizeKey: PackSizeKey;
+  label: string;
+  unit: string;
+  variantName: string;
+  servingNote: string;
+  price: number;
+  unitRate: string;
+}
+
 export interface Product {
   id: string;
   brand_name: ProductBrand;
@@ -21,6 +33,7 @@ export interface Product {
   is_available: boolean;
   sort_order: number;
   created_at: string;
+  variants?: ProductVariant[];
 }
 
 export interface ContactMessage {

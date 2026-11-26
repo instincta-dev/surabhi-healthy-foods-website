@@ -150,6 +150,20 @@ INSERT INTO products (
   ),
   (
     'Abhiram''s Dosa Batter',
+    'Fresh Stone-Ground Dosa & Idli Batter — 500g Pouch',
+    'Compact, fresh everyday batter pack stone-ground with rice, whole urad dal, and RO-purified water — ideal for small households and quick tiffins.',
+    'Dosa Batter',
+    NULL,
+    '500g Stand-up Pouch',
+    'Ready to pour & cook',
+    '5–6 days refrigerated',
+    'Store refrigerated at 0°C – 5°C; stir gently before pouring',
+    ARRAY['Compact Trial & Couple Pack', 'Naturally Fermented (Zero Soda)', 'Yields ~8–10 Crispy Dosas'],
+    '/images/dosa-batter.png',
+    6
+  ),
+  (
+    'Abhiram''s Dosa Batter',
     'Fresh Stone-Ground Dosa & Idli Batter — 1 kg Pouch',
     'Silky, naturally fermented batter stone-ground with premium parboiled rice, whole urad dal, and RO-purified water. Delivers crisp golden dosas and pillowy soft idlis.',
     'Dosa Batter',
@@ -160,7 +174,7 @@ INSERT INTO products (
     'Store refrigerated at 0°C – 5°C; stir gently before pouring',
     ARRAY['Traditional Stone-Ground', 'Naturally Fermented (Zero Soda)', 'RO-Purified Water'],
     '/images/dosa-batter.png',
-    6
+    7
   ),
   (
     'Abhiram''s Dosa Batter',
@@ -174,6 +188,6 @@ INSERT INTO products (
     'Store refrigerated at 0°C – 5°C; close lid tightly after use',
     ARRAY['High Yield (~28 Dosas / 32 Idlis)', 'Zero Preservatives', 'Consistent Daily Fermentation'],
     '/images/dosa-batter.png',
-    7
+    8
   )
 ON CONFLICT DO NOTHING;

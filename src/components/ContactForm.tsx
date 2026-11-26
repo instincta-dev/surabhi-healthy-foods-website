@@ -29,11 +29,16 @@ function resolveInitialProductInterest(initialProduct: string): string {
   return PRODUCT_OPTIONS[0];
 }
 
+const inputClasses =
+  "rounded-xl border border-paper-dark/50 bg-cream/30 px-4 py-3 text-sm font-normal text-ink outline-none transition-all duration-150 focus:border-brand focus:bg-white focus:ring-2 focus:ring-brand/10";
+
 export default function ContactForm() {
   const searchParams = useSearchParams();
   const initialProduct = searchParams.get("product") ?? "";
 
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
+    "idle"
+  );
   const [errorMsg, setErrorMsg] = useState("");
   const [enquiryType, setEnquiryType] = useState<string>(ENQUIRY_TYPES[0]);
   const [productInterest, setProductInterest] = useState<string>(() =>
@@ -77,15 +82,15 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="flex flex-col items-center justify-center gap-4 rounded-2xl bg-sage-tint px-6 py-12 text-center">
+      <div className="flex flex-col items-center justify-center gap-4 rounded-2xl bg-brand/[0.04] px-6 py-14 text-center">
         <div className="flex h-14 w-14 items-center justify-center rounded-full bg-brand text-white">
-          <CheckCircle2 className="h-7 w-7 text-accent" />
+          <CheckCircle2 className="h-7 w-7" />
         </div>
-        <h3 className="font-heading text-2xl font-bold text-brand">
+        <h3 className="font-heading text-xl font-bold text-brand">
           Enquiry received!
         </h3>
         <p className="max-w-sm text-sm leading-relaxed text-muted">
-          Thank you for contacting Surabhi Healthy Foods. Our team will reach out
+          Thank you for contacting Surabhi Healthy Foods. We&apos;ll respond
           shortly regarding your{" "}
           <span className="font-semibold text-brand">{productInterest}</span>{" "}
           enquiry.
@@ -103,9 +108,9 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-      {/* Enquiry Type Pills */}
+      {/* Enquiry Type */}
       <div>
-        <span className="mb-2 block text-xs font-bold uppercase tracking-wider text-brand">
+        <span className="mb-2 block text-[11px] font-semibold uppercase tracking-wider text-brand">
           Enquiry Type
         </span>
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -114,10 +119,10 @@ export default function ContactForm() {
               key={type}
               type="button"
               onClick={() => setEnquiryType(type)}
-              className={`rounded-xl border px-3.5 py-2.5 text-left text-xs font-semibold transition-all ${
+              className={`rounded-xl border px-3.5 py-2.5 text-left text-xs font-semibold transition-all duration-150 ${
                 enquiryType === type
-                  ? "border-brand bg-brand text-white shadow-xs"
-                  : "border-paper-dark bg-cream/60 text-muted hover:border-brand/40 hover:text-brand"
+                  ? "border-brand bg-brand text-white"
+                  : "border-paper-dark/50 bg-cream/30 text-muted hover:border-brand/30 hover:text-brand"
               }`}
             >
               {type}
@@ -126,13 +131,13 @@ export default function ContactForm() {
         </div>
       </div>
 
-      {/* Product Interest */}
-      <label className="flex flex-col gap-1.5 text-xs font-bold uppercase tracking-wider text-brand">
+      {/* Product */}
+      <label className="flex flex-col gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-brand">
         Product Line
         <select
           value={productInterest}
           onChange={(e) => setProductInterest(e.target.value)}
-          className="rounded-xl border border-paper-dark bg-cream/50 px-4 py-3 text-sm font-medium text-ink outline-none transition-all focus:border-brand focus:bg-white focus:ring-2 focus:ring-brand/15"
+          className={inputClasses}
         >
           {PRODUCT_OPTIONS.map((opt) => (
             <option key={opt} value={opt}>
@@ -143,48 +148,48 @@ export default function ContactForm() {
       </label>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <label className="flex flex-col gap-1.5 text-xs font-bold uppercase tracking-wider text-brand">
+        <label className="flex flex-col gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-brand">
           Your Name *
           <input
             type="text"
             name="name"
             required
-            className="rounded-xl border border-paper-dark bg-cream/50 px-4 py-3 text-sm font-normal text-ink outline-none transition-all focus:border-brand focus:bg-white focus:ring-2 focus:ring-brand/15"
+            className={inputClasses}
             placeholder="e.g. Rajesh Nair"
           />
         </label>
 
-        <label className="flex flex-col gap-1.5 text-xs font-bold uppercase tracking-wider text-brand">
+        <label className="flex flex-col gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-brand">
           Phone / WhatsApp *
           <input
             type="tel"
             name="phone"
             required
-            className="rounded-xl border border-paper-dark bg-cream/50 px-4 py-3 text-sm font-normal text-ink outline-none transition-all focus:border-brand focus:bg-white focus:ring-2 focus:ring-brand/15"
+            className={inputClasses}
             placeholder="+91 98XXX XXXXX"
           />
         </label>
       </div>
 
-      <label className="flex flex-col gap-1.5 text-xs font-bold uppercase tracking-wider text-brand">
-        Email Address (Optional)
+      <label className="flex flex-col gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-brand">
+        Email (Optional)
         <input
           type="email"
           name="email"
-          className="rounded-xl border border-paper-dark bg-cream/50 px-4 py-3 text-sm font-normal text-ink outline-none transition-all focus:border-brand focus:bg-white focus:ring-2 focus:ring-brand/15"
+          className={inputClasses}
           placeholder="you@example.com"
         />
       </label>
 
-      <label className="flex flex-col gap-1.5 text-xs font-bold uppercase tracking-wider text-brand">
-        Message / Pack Quantities *
+      <label className="flex flex-col gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-brand">
+        Message / Quantities *
         <textarea
           name="message"
           required
           rows={4}
           value={messageText}
           onChange={(e) => setMessageText(e.target.value)}
-          className="resize-y rounded-xl border border-paper-dark bg-cream/50 px-4 py-3 text-sm font-normal text-ink outline-none transition-all focus:border-brand focus:bg-white focus:ring-2 focus:ring-brand/15"
+          className={`resize-y ${inputClasses}`}
           placeholder="Tell us the pack quantities, delivery area, or wholesale details..."
         />
       </label>
@@ -198,12 +203,12 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="mt-1 inline-flex items-center justify-center gap-2 rounded-full bg-brand px-7 py-4 text-sm font-semibold text-white shadow-sm transition-all hover:bg-brand-deep disabled:opacity-60"
+        className="mt-1 inline-flex items-center justify-center gap-2 rounded-full bg-brand px-7 py-3.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-brand-deep disabled:opacity-60"
       >
         {status === "loading" ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin" />
-            Sending enquiry...
+            Sending...
           </>
         ) : (
           <>
