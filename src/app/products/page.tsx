@@ -17,18 +17,18 @@ async function ProductsListLoader() {
 export default function ProductsPage() {
   return (
     <ViewTransition enter="page-blur-fade" exit="page-blur-fade" default="none">
-      <section className="bg-cream">
+      <section className="flex flex-col justify-center bg-cream lg:min-h-[calc(100dvh-61px)]">
         <Suspense
           fallback={
-            <div className="mx-auto max-w-7xl px-5 pt-4 pb-6 sm:px-8">
-              <div className="mb-4 h-14 animate-pulse rounded-xl bg-paper" />
-              <div className="grid gap-5 lg:grid-cols-[224px_1fr]">
-                <div className="h-80 animate-pulse rounded-2xl bg-paper" />
+            <div className="mx-auto w-full max-w-7xl px-5 py-6 sm:px-8">
+              <div className="mb-5 h-14 animate-pulse rounded-xl bg-paper" />
+              <div className="grid gap-5 lg:grid-cols-[228px_1fr]">
+                <div className="h-[440px] animate-pulse rounded-2xl bg-paper" />
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {Array.from({ length: 3 }).map((_, i) => (
                     <div
                       key={i}
-                      className="h-[420px] animate-pulse rounded-2xl bg-paper"
+                      className="h-[440px] animate-pulse rounded-2xl bg-paper"
                     />
                   ))}
                 </div>

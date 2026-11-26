@@ -86,9 +86,9 @@ export default function ProductsCatalog({
     PACK_SIZE_FILTERS.find((f) => f.id === globalSize)?.label ?? "All Sizes";
 
   return (
-    <div className="mx-auto max-w-7xl px-5 pt-4 pb-6 sm:px-8">
+    <div className="mx-auto w-full max-w-7xl px-5 pt-5 pb-7 sm:px-8 lg:py-6">
       {/* Compact Header Strip + Inline Category Filter */}
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3 border-b border-paper-dark/50 pb-3.5">
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-3 border-b border-paper-dark/50 pb-4">
         <div>
           <p className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-gold">
             {COMPANY_NAME} · Daily Staples
@@ -111,7 +111,7 @@ export default function ProductsCatalog({
       </div>
 
       {/* Single-View Split Layout: Compact Left Sidebar + 3-Card Product Grid */}
-      <div className="grid gap-4 lg:grid-cols-[224px_1fr] lg:items-start lg:gap-5">
+      <div className="grid gap-4 lg:grid-cols-[228px_1fr] lg:items-stretch lg:gap-5">
         <QuantityFilter selected={globalSize} onChange={handlePackSizeChange} />
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

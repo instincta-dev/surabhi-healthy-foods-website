@@ -25,7 +25,7 @@ export default function ProductCard({
   return (
     <article className="animate-fade-in-up group flex flex-col overflow-hidden rounded-2xl border border-paper-dark/55 bg-white shadow-2xs transition-all duration-200 hover:border-brand/25 hover:shadow-md">
       {/* Compact Image Header */}
-      <div className="relative h-36 w-full shrink-0 overflow-hidden bg-paper xl:h-40">
+      <div className="relative h-40 w-full shrink-0 overflow-hidden bg-paper lg:h-44 2xl:h-48">
         <Image
           src={imageSrc}
           alt={`${product.brand_name} — ${variant.unit}`}
@@ -45,7 +45,7 @@ export default function ProductCard({
       </div>
 
       {/* Compact Card Body */}
-      <div className="flex flex-1 flex-col p-4">
+      <div className="flex flex-1 flex-col p-4 xl:p-5">
         {/* Dynamic Pack Weight / Count & Tier Badge */}
         <div className="flex flex-wrap items-center justify-between gap-1.5">
           <span className="inline-flex items-center gap-1 rounded-full border border-gold/25 bg-warm px-2.5 py-0.5 text-[11.5px] font-bold text-gold transition-colors">
